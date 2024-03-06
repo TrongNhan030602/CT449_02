@@ -12,12 +12,17 @@ const contactsRouter = require("./app/routes/contact.route");
 
 app.use("/api/contacts", contactsRouter);
 
+app.get('/', (req, res) => {
+    res.json({ message: "Welcome to contact book application!" });
+});
+
 // handle 404 response
 app.use((req, res, next) => {
     // Code ở đây sẽ chạy khi không có route được định nghĩa nào
     // Khớp với yêu cầu. Gọi next() để chuyển sang middleware xử lý lỗi
     return next(new ApiError(404, "Resource not found"));
 });
+
 
 // Định nghĩa middleware  xử lý lỗi ở cuối cùng, sau các lệnh gọi app.use() và route khác
 app.use((err, req, res, next) => {
@@ -30,9 +35,5 @@ app.use((err, req, res, next) => {
 });
 
 
-
-app.get('/', (req, res) => {
-    res.json({ message: "Welcome to contact book application!" });
-});
 
 module.exports = app;
